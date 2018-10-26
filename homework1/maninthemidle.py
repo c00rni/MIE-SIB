@@ -7,12 +7,12 @@ parser.add_argument('target', help='The IP address of the target')
 parser.add_argument('gateway', help='The gateway IP address')
 args = parser.parse_args()
 
-#Get the interface adress ip
+#Get the interface ip adress
 hostname = socket.gethostname()
 my_ip = socket.gethostbyname(hostname)
 
 def getMacAddress(host):
-    ''' Get the mac address the host
+    ''' Get the host mac address
         :param: Host ip
         :return: mac address
         :rtype: str
